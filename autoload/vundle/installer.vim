@@ -389,9 +389,9 @@ func! s:make_sync_command(bang, bundle) abort
       " Directory names match but the origin remotes are not the same
       let cmd_parts = [
                   \ 'cd '.vundle#installer#shellesc(a:bundle.path()) ,
-                  \ 'git remote set-url origin ' . vundle#installer#shellesc(a:bundle.uri),
-                  \ 'git fetch',
-                  \ 'git reset --hard origin/HEAD',
+                  \ 'git -c color.ui=false remote set-url origin ' . vundle#installer#shellesc(a:bundle.uri),
+                  \ 'git -c color.ui=false fetch',
+                  \ 'git -c color.ui=false reset --hard origin/HEAD',
                   \ 'git submodule update --init --recursive',
                   \ ]
       let cmd = join(cmd_parts, ' && ')
@@ -407,7 +407,7 @@ func! s:make_sync_command(bang, bundle) abort
 
     let cmd_parts = [
                 \ 'cd '.vundle#installer#shellesc(a:bundle.path()),
-                \ 'git pull',
+                \ 'git -c color.ui=false pull',
                 \ 'git submodule update --init --recursive',
                 \ ]
     let cmd = join(cmd_parts, ' && ')
@@ -415,7 +415,7 @@ func! s:make_sync_command(bang, bundle) abort
 
     let initial_sha = s:get_current_sha(a:bundle)
   else
-    let cmd = 'git clone --recursive '.vundle#installer#shellesc(a:bundle.uri).' '.vundle#installer#shellesc(a:bundle.path())
+    let cmd = 'git -c color.ui=false clone --recursive '.vundle#installer#shellesc(a:bundle.uri).' '.vundle#installer#shellesc(a:bundle.path())
     let initial_sha = ''
   endif
   return [cmd, initial_sha]
