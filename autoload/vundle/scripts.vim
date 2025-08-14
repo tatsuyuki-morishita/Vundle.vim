@@ -84,7 +84,7 @@ func! s:create_changelog() abort
     let bundle      = bundle_data[2]
 
     let cmd = 'cd '.vundle#installer#shellesc(bundle.path()).
-          \              ' && git log --pretty=format:"%s   %an, %ar" --graph '.
+          \              ' && git -c color.ui=false log --pretty=format:"%s   %an, %ar" --graph '.
           \               initial_sha.'..'.updated_sha
 
     let cmd = vundle#installer#shellesc_cd(cmd)
